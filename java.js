@@ -1,5 +1,3 @@
-// combined.js
-
 // Get a reference to the button and the projects section
 const toggleButton = document.getElementById('toggleProjects');
 const projectsSection = document.getElementById('projects');
