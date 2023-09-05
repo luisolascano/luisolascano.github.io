@@ -83,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
             cookieConsentBanner.style.display = 'none';
         });
     } else {
-        // If the user has previously accepted cookies, set 'save' to true
+        // If the user has previously accepted cookies, set 'save' to true and get rid of the banner
+        cookieConsentBanner.style.display = 'none';
         save = true;
     }
     // Function to get the value of a cookie by name
