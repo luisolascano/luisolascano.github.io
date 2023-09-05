@@ -5,11 +5,19 @@
     <title>Luis - Data Analytics</title>
     <link rel="stylesheet" href="styles.css">
     <script src="java.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap">
+
+
 
 </head>
 <body>
     <header>
-        <h1>Hello! Thanks for visiting, but this site is still a work in progress! Check back soon!</h1>
+        <h1 >Hello! Thanks for visiting, but this site is still a work in progress! Check back soon!</h1>
     </header>
 
     <nav>
@@ -20,22 +28,45 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
+    
+    <div id="cookieConsentBanner" class="cookie-banner">
+        <p>This website uses cookies to ensure you get the best experience on our website.</p>
+        <button id="acceptCookies">Accept</button>
+        <button id="rejectCookies">Reject</button>
+        <a href="/privacy-policy.html" id="learnMore">Learn More<span class="tooltip">All the cookie does is update the timer at the bottom of the page<br>Due to privacy laws I feel I'm obligated to disclose that and allow you the option to decline that cookie :)</span></a>
+    </div>
+    
+    
 
     <section id="about">
         <h2>About Me</h2>
-        <p>I'm Luis, a passionate data analytics enthusiast. I thrive on exploring and extracting valuable insights from data to drive informed decision-making. My background includes programming, video editing, and hands-on experience in computer repair and building. I also manage my own Unraid server, troubleshoot hardware and network issues, and ensure seamless operations.</p>
-    </section>
+        <div class="LI-profile-badge" data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="light" data-vanity="your-linkedin-vanity-url">
+            <a class="LI-simple-link" href='https://www.linkedin.com/in/luis-lascano-5a8bb4163/'>Your Name</a>
+          </div>
+          
+        <p>I'm Luis, a passionate data analytics enthusiast with a background that started as a hobby back in 2012. It was then that I began programming, my journey initiated with Lua on Roblox.</p>
+        <p>Fast forward to today, and I find myself deciphering the ever-evolving landscape of virtual reality (VR) with the help of Unity. My AS degree in Computer Programming and Analysis laid the groundwork for my technical skills, which I now leverage to create immersive VR experiences and explore the limitless possibilities of this exciting space.</p>
+        <p>As a data enthusiast, I see data as more than just numbers; it's a way to tell stories and make informed decisions. Whether I'm crunching data or crafting VR worlds, my goal remains the same: to blend creativity and technology to bring ideas to life.</p>
+        <p>Outside the digital realm, I enjoy building custom computers and managing my own homelab, including my Unraid server. These hands-on pursuits provide the perfect balance to my digital adventures.</p>
+        <p>Join me on my journey as I continue to dive deeper into the VR world, decode data narratives, and explore the endless possibilities that technology and creativity offer.</p>
+    
+    
+    
+        </section>
 
     <section id="skills">
         <h2>Skills</h2>
         <ul>
-            <li><strong>Data Analytics:</strong> Proficient in data analysis, visualization, and deriving insights from complex datasets.</li>
-            <li><strong>Programming:</strong> Skilled in C#, Python, JavaScript, Lua, and R for various applications.</li>
-            <li><strong>Video Editing:</strong> Experienced in video production and editing for multimedia content creation.</li>
-            <li><strong>Computer Repair and Building:</strong> Adept at diagnosing and fixing hardware issues and building custom PC systems.</li>
-            <li><strong>Server Administration (Unraid):</strong> Manage Unraid server environments, troubleshoot hardware, and ensure smooth networking operations.</li>
-            <li><strong>Website Design:</strong> Proficient in creating visually appealing and user-friendly websites.</li>
-            <!-- Add more details or skills as needed -->
+            <ul>
+                <li><strong>Data Analytics:</strong> Proficient in data analysis, visualization, and deriving insights from complex datasets.</li>
+                <li><strong>Programming:</strong> Skilled in C#, Python, JavaScript, Lua, and R for various applications.</li>
+                <li><strong>Video Editing:</strong> Experienced in video production and editing using DaVinci Resolve, and other tools, for multimedia content creation.</li>
+                <li><strong>Computer Repair and Building:</strong> Adept at diagnosing and fixing hardware issues and building custom PC systems.</li>
+                <li><strong>Server Administration (Unraid):</strong> Manage Unraid server environments, troubleshoot hardware, and ensure smooth networking operations.</li>
+                <li><strong>Website Design:</strong> Proficient in creating visually appealing and user-friendly websites.</li>
+                <li><strong>Hardware and Network Troubleshooting:</strong> Skilled in troubleshooting hardware and network issues for seamless operations.</li>
+                <li><strong>Custom Computer Building:</strong> Building custom computers and managing a homelab, including an Unraid server.</li>
+            </ul>
         </ul>
     </section>
 
@@ -45,8 +76,8 @@
         <p>Stay tuned for exciting project updates!</p>
         <ul>
             <li>
-                <h3>Project 1</h3>
-                <p>Description of project 1 goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a href="Dietary Analysis and Optimization.html"><h3>Dietary Analysis and Optimization</h3></a>
+                <p>For nearly a year, I've diligently tracked my dietary data using the Chronometer website. With a focus on precision, I measured every consumption in grams. Using R and R Studio, I conducted a thorough analysis of this data, which includes nutrient intake details, to gain valuable insights. The process involved data collection, rigorous cleaning, and structuring to ensure accuracy and relevance.</p>
             </li>
             <li>
                 <h3>Project 2</h3>
@@ -58,9 +89,18 @@
 
     <section id="contact">
         <h2>Contact Me</h2>
-        <p>Email: luis@example.com</p>
-        <p>Phone: 123-456-7890</p>
+       <!--
+<p>Email: luis@example.com</p>
+<p>Phone: 123-456-7890</p>
+-->
+
+        
+        
+        <a href="https://www.linkedin.com/in/luis-lascano-5a8bb4163" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+        </a>
     </section>
+    
     <div id="timer"></div>
     <footer>
         <p>&copy; 2023 Luis | But like not really lol </p>

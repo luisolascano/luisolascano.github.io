@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report: Dietary Analysis and Optimization</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <style>
+        /* Style for code boxes */
+        .code-box {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-left: 3px solid #d32f2f;
+            color: #333;
+            page-break-inside: avoid;
+            font-size: 14px;
+            margin: 20px 0;
+            padding: 10px 15px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <section id="introduction">
+        <h1>Report: Dietary Analysis and Optimization</h1>
+        <h2>Introduction</h2>
+        <p>For almost a year, I've been diligently tracking my dietary data using the Chronometer website. This data collection process is rooted in precision, as I measure everything I consume in grams. To enhance the accuracy and relevance of the data, I used R and R Studio for the analysis.</p>
+    </section>
+    
+    <section id="data-collection-and-cleaning">
+        <h2>Data Collection and Cleaning</h2>
+        <p>I began the analysis journey by downloading comprehensive dietary data from the Chronometer website. The data includes detailed information about nutrient intake, providing an extensive record of my dietary habits over time.</p>
+
+        <section id="data-cleaning">
+            <h3>Data Cleaning</h3>
+            <p>Utilizing R and the dplyr and tidyr libraries, I meticulously cleaned the raw data. The data cleaning process encompassed the following tasks:</p>
+            <ul>
+                <li>Removal of empty rows and any extraneous information.</li>
+                <li>Imputation of missing values with zeros, ensuring data consistency.</li>
+                <li>Proper structuring of data to maintain data integrity.</li>
+            </ul>
+        </section>
+        
+        <section id="r-code-for-data-cleaning">
+            <h3>R Code for Data Cleaning</h3>
+            <pre class="code-box"><code>
+                # Title: Data Cleaning and Handling Missing Values in CSV File
+
+        # Introduction:
+        # In data analysis and preparation, one crucial step is cleaning the dataset to ensure it is free of errors, inconsistencies, and missing values. In this code example, we demonstrate how to clean a CSV file, specifically addressing the removal of empty rows, replacing missing values with zeros, and filtering rows based on a minimum value in the second column.
+        
+        # Code Overview:
+        
+        # Library Loading:
+        # The code starts by loading the dplyr library, which is essential for data manipulation in R.
+        library(dplyr)
+        library(tidyr)
+        
+        # CSV File Reading:
+        # The CSV file, located at "dailysummary.csv," is read into the nutrient_data data frame using read.csv(). The option stringsAsFactors = FALSE ensures that character columns are not converted into factors.
+        nutrient_data <- read.csv("dailysummary.csv", stringsAsFactors = FALSE)
+        
+        # Header Row Preservation:
+        # The first row of the dataset, typically containing column names or headers, is stored in the header_row variable.
+        header_row <- nutrient_data[1, ]
+        
+        # Removing Header Row:
+        # To facilitate cleaning, the header row is removed from the nutrient_data data frame. This allows us to apply data cleaning operations to the remaining rows without affecting the column names.
+        nutrient_data <- nutrient_data[-1, ]
+        
+        # Filtering Empty Rows:
+        # Using rowSums(), the code identifies rows where any column (except the first) is not empty. Rows with empty values in all columns (except the first) are removed from the dataset.
+        nutrient_data <- nutrient_data[rowSums(!is.na(nutrient_data[, -1])) > 0, ]
+        
+        # Restoring Header Row:
+        # After cleaning the data, the header row is added back to the cleaned_nutrient_data data frame using rbind(). This ensures that the cleaned data retains the original column names.
+        cleaned_nutrient_data <- rbind(header_row, nutrient_data)
+        
+        # Replacing Missing Values with 0:
+        # Any remaining missing values (NA) in the cleaned_nutrient_data data frame are replaced with zeros (0). This step ensures consistency in data types and facilitates further analysis.
+        cleaned_nutrient_data[is.na(cleaned_nutrient_data)] <- 0
+        
+        # Filtering Rows Based on Second Column (Energy):
+        # Now, let's filter rows where the value in the second column (assuming it represents "Calories") is less than 800.
+        cleaned_nutrient_data <- cleaned_nutrient_data %>%
+          filter(as.numeric(cleaned_nutrient_data[, 2]) >= 800)
+        
+        # Reshaping Data to Long Format
+        long_data <- cleaned_nutrient_data %>%
+        pivot_longer(cols = -Date, names_to = "Nutrient", values_to = "Value")
+        
+        # Saving Long Data as the Second Sheet
+        #write.csv(long_data, "dailysummary_Long.csv", row.names = FALSE)
+        
+        
+        # Saving Cleaned Data:
+        # Finally, the cleaned dataset is saved as a new CSV file named "dailysummary_Cleaned.csv" using write.csv(). The option row.names = FALSE prevents the inclusion of row numbers in the saved file.
+        #write.csv(cleaned_nutrient_data, "dailysummary_Cleaned.csv", row.names = FALSE)
+        
+        
+        # Calculate and save the average for each column
+        column_averages <- colMeans(cleaned_nutrient_data[-1])
+        average_data <- data.frame(Nutrient = names(column_averages), Average = column_averages)
+        
+        # Save the average data as "column_averages.csv"
+        write.csv(average_data, "column_averages.csv", row.names = FALSE)
+        
+        # Create a third CSV with headers for RDA input
+        # You can manually input RDA values in this CSV
+        header_with_rda <- data.frame(Nutrient = colnames(cleaned_nutrient_data))
+        write.csv(header_with_rda, "RDA_input.csv", row.names = FALSE)
+        
+        
+        # Conclusion:
+        # Data cleaning is an essential part of data preparation for analysis and modeling. This code demonstrates how to remove empty rows, preserve the header, replace missing values with zeros, and filter rows based on a minimum value in the second column of a CSV file using R and the dplyr library. The resulting cleaned dataset is now ready for further analysis, ensuring data quality and integrity.
+        
+ 
+            </code></pre>
+        </section>
+    </section>
+
+    <section id="data-visualization">
+        <h2>Data Visualization</h2>
+        <p>In the pursuit of gaining insights from the data, I harnessed the power of Tableau to create compelling visualizations. Visual representations included:</p>
+        <ul>
+            <li>Line charts depicting daily nutrient intake trends over the tracking period.</li>
+            <li>Bar charts providing comparisons between my dietary nutrient intake and the Recommended Dietary Allowance (RDA) and Recommended Maximum Allowance (RMA).</li>
+        </ul>
+    </section>
+
+    <section id="nutrient-analysis">
+        <h2>Nutrient Analysis</h2>
+        <p>To gauge the nutritional adequacy and balance of my diet, I calculated both the Recommended Dietary Allowance (RDA) and Recommended Maximum Allowance (RMA) values. This step involved consulting established nutritional guidelines and employing appropriate formulas to ascertain ideal nutrient levels.</p>
+    </section>
+
+    <section id="data-comparison">
+        <h2>Data Comparison</h2>
+        <p>With RDA and RMA values in hand, I conducted a comprehensive comparison with my dietary data. This comparison revealed areas where my nutrient intake either fell short of recommended levels or exceeded the maximum allowances.</p>
+    </section>
+
+    <section id="research-and-recommendations">
+        <h2>Research and Recommendations</h2>
+        <p>In the quest for a healthier and more balanced diet, I embarked on thorough research. The recommendations formulated were grounded in evidence-based dietary modifications:</p>
+        <ul>
+            <li>Identification of foods rich in nutrients for which my intake was below the RDA.</li>
+            <li>Strategic approaches to mitigate nutrient intake that exceeded the RMA.</li>
+            <li>Overall dietary guidance to enhance nutritional balance and well-being.</li>
+        </ul>
+    </section>
+
+    <section id="nutritional-recommendations">
+        <h2>Nutritional Recommendations</h2>
+    
+        <section id="low-in-protein">
+            <h3>Low in Protein:</h3>
+            <ul>
+                <li>Lean Meats: Include lean sources of protein like skinless poultry, lean cuts of beef, pork, and fish in your diet.</li>
+                <li>Legumes: Incorporate beans, lentils, and chickpeas into your meals. These are excellent plant-based sources of protein.</li>
+                <li>Greek Yogurt: Opt for Greek yogurt, which is higher in protein compared to regular yogurt. It's also a great source of probiotics.</li>
+                <li>Eggs: Eggs are a versatile protein source. Scramble them for breakfast or add them to salads.</li>
+            </ul>
+        </section>
+    
+        <section id="low-in-fiber">
+            <h3>Low in Fiber:</h3>
+            <ul>
+                <li>Whole Grains: Choose whole grains like brown rice, quinoa, whole wheat pasta, and oats to increase your fiber intake.</li>
+                <li>Fruits and Vegetables: Load up on fruits and vegetables, as they are rich in fiber. Berries, apples, broccoli, and leafy greens are excellent choices.</li>
+                <li>Nuts and Seeds: Snack on almonds, chia seeds, and flaxseeds. They're packed with fiber and healthy fats.</li>
+                <li>Legumes: As mentioned earlier, beans, lentils, and chickpeas are not only high in protein but also rich in fiber.</li>
+            </ul>
+        </section>
+    
+        <section id="low-in-healthy-fats">
+            <h3>Low in Healthy Fats:</h3>
+            <ul>
+                <li>Avocado: Add avocado slices to salads, sandwiches, or enjoy it as guacamole for a dose of healthy fats.</li>
+                <li>Oily Fish: Fatty fish like salmon, mackerel, and trout are rich in omega-3 fatty acids. Aim to have fish at least twice a week.</li>
+                <li>Nuts and Seeds: Almonds, walnuts, and flaxseeds are high in healthy fats. Use them as toppings or snack on them.</li>
+                <li>Olive Oil: Use extra virgin olive oil for cooking and as a salad dressing.</li>
+            </ul>
+        </section>
+    
+        <section id="low-in-vitamins-minerals">
+            <h3>Low in Vitamins and Minerals (e.g., Vitamins A, C, D, Calcium, Iron):</h3>
+            <ul>
+                <li>Colorful Fruits and Vegetables: Consume a variety of colorful fruits and vegetables daily to ensure you're getting a range of vitamins and minerals.</li>
+                <li>Fortified Foods: Choose fortified foods like fortified cereals and dairy alternatives for added vitamins and minerals.</li>
+                <li>Supplements: Consider speaking with a healthcare professional about supplements if you have persistent deficiencies in vitamins or minerals.</li>
+            </ul>
+        </section>
+    
+        <section id="high-in-sugars">
+            <h3>High in Sugars:</h3>
+            <ul>
+                <li>Limit Sugary Beverages: Reduce or eliminate sugary drinks like soda, fruit juices, and sweetened teas from your diet.</li>
+                <li>Choose Whole Fruits: Opt for whole fruits over fruit juices or sweetened snacks to satisfy your sweet tooth naturally.</li>
+                <li>Read Labels: Be mindful of added sugars in processed foods. Check food labels and aim for products with lower sugar content.</li>
+            </ul>
+        </section>
+    
+        <section id="high-in-sodium">
+            <h3>High in Sodium:</h3>
+            <ul>
+                <li>Fresh Herbs and Spices: Use fresh herbs and spices like basil, oregano, and garlic to season your dishes instead of relying on salt.</li>
+                <li>Limit Processed Foods: Processed and packaged foods often contain high levels of sodium. Cook fresh meals at home to control your sodium intake.</li>
+                <li>Choose Low-Sodium Alternatives: Look for low-sodium versions of canned soups, sauces, and condiments.</li>
+            </ul>
+        </section>
+    </section>
+
+    <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p>This extensive nutrition data analysis has yielded valuable insights into my dietary patterns and nutrient consumption over the past year. The precise tracking of food intake in grams, combined with the rigorous data cleaning and visualization techniques, has enabled a comprehensive understanding of my nutrition. As I continue on my journey towards better health, these findings will serve as a roadmap for fine-tuning my diet to achieve optimal nutritional balance and adequacy.</p>
+    </section>
+
+    <section id="data-files-generated">
+        <h2>Data Files Generated</h2>
+        <p>In the process of this analysis, several data files were generated:</p>
+        <ul>
+            <li>Daily Nutrient Averages (column_averages.csv): This file contains the average nutrient values for each column, helping to understand overall dietary trends.</li>
+            <li>RDA Input Template (RDA_input.csv): A CSV file with headers for manual input of Recommended Dietary Allowance (RDA) values for different nutrients.</li>
+            <li><a href="https://public.tableau.com/views/NutritionalAnalysisandDietaryOptimization/Dashboard1?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link">Tableau Workbook</a>: Explore interactive visualizations and delve deeper into the nutritional analysis through our Tableau workbook.</li>            </ul>
+    </section>
+</body>
+</html>
